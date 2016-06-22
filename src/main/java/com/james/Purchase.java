@@ -25,6 +25,7 @@ public class Purchase {
     @Column(nullable = false)
     String date;
 
+    @ManyToOne
     Customer customer;
 
     public Purchase() {
