@@ -14,7 +14,7 @@ public class Purchase {
     Integer id;
 
     @Column(nullable = false)
-    String category;
+    String date;
 
     @Column(nullable = false)
     String creditCard;
@@ -23,28 +23,35 @@ public class Purchase {
     String cvv;
 
     @Column(nullable = false)
-    String date;
+    String category;
 
     @ManyToOne
     Customer customer;
 
+    public Purchase(String date, String creditCard, String cvv, String category) {
+        this.date = date;
+        this.creditCard = creditCard;
+        this.cvv = cvv;
+        this.category = category;
+    }
+
     public Purchase() {
     }
 
-    public Purchase(String category, String creditCard, String cvv, String date, Customer customer) {
-        this.category = category;
+    public Purchase(String date, String creditCard, String cvv, String category, Customer customer) {
+        this.date = date;
         this.creditCard = creditCard;
         this.cvv = cvv;
-        this.date = date;
+        this.category = category;
         this.customer = customer;
     }
 
-    public String getCategory() {
-        return category;
+    public String getDate() {
+        return date;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getCreditCard() {
@@ -63,11 +70,19 @@ public class Purchase {
         this.cvv = cvv;
     }
 
-    public String getDate() {
-        return date;
+    public String getCategory() {
+        return category;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }
