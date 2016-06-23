@@ -28,7 +28,7 @@ public class PurchasesController {
             File file = new File("customers.csv");
             Scanner firstScanner = new Scanner(file);
 
-            firstScanner.hasNextLine();
+            firstScanner.nextLine();
             while (firstScanner.hasNextLine()) {
                 String cusLine = firstScanner.nextLine();
                 String[] columns = cusLine.split(",");
@@ -43,15 +43,15 @@ public class PurchasesController {
             File secondFile = new File("purchases.csv");
             Scanner secondScanner = new Scanner(secondFile);
 
-            secondScanner.hasNextLine();
+            secondScanner.nextLine();
             while (secondScanner.hasNextLine()) {
                 String purLine = secondScanner.nextLine();
                 String[] columns = purLine.split(",");
-                int id = Integer.valueOf(columns[0]);
                 String date = columns[1];
                 String creditCard = columns[2];
                 String cvv = columns[3];
                 String category = columns[4];
+                int id = Integer.valueOf(columns[0]);
                 Customer customer = customers.findById(id);
                 Purchase purchase = new Purchase(date, creditCard, cvv, category, customer);
                 purchases.save(purchase);
