@@ -1,6 +1,8 @@
 package com.james;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,16 +63,28 @@ public class PurchasesController {
     }
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
-    public String home(Model model, String category) {
-        Iterable<Purchase> prchs;
+    public String home(Model model, String category, Integer page) {
+        page = (page == null) ? 0 : page;
+
+        PageRequest pr = new PageRequest(page, 10);
+
+        Page<Purchase> prchs;
         if (category != null) {
-            prchs = purchases.findByCategory(category);
+            prchs = purchases.findByCategory(pr, category);
         }
         else {
-            prchs = purchases.findAll();
+            prchs = purchases.findAll(pr);
+
         }
 
+        model.addAttribute("category", category);
+        model.addAttribute("nextPage", page + 1);
+
+        model.addAttribute("showNext", prchs.hasNext());
         model.addAttribute("purchases", prchs);
+
+        model.addAttribute("prevPage", page - 1);
+        model.addAttribute("showPrev", prchs.hasPrevious());
         return "home";
     }
 }
